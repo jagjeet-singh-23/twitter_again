@@ -1,7 +1,7 @@
 
 import { toast } from "react-hot-toast";
 import { useCallback, useState } from "react";
-
+import axios from "axios";
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
@@ -31,12 +31,12 @@ const RegisterModal = () => {
         try {
             setIsLoading(true);
 
-            //   await axios.post('/api/register', {
-            //     email,
-            //     password,
-            //     username,
-            //     name,
-            //   });
+              await axios.post('/api/register', {
+                email,
+                password,
+                username,
+                name,
+              });
 
             setIsLoading(false)
 
