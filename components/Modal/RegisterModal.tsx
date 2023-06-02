@@ -1,7 +1,8 @@
-
+import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useCallback, useState } from "react";
-import axios from "axios";
+import { signIn } from "next-auth/react";
+
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
@@ -15,14 +16,13 @@ const RegisterModal = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const [name, setName] = useState(''); 
+    const [name, setName] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const onToggle = useCallback(() => {
         if (isLoading) {
             return;
         }
-
         registerModal.onClose();
         loginModal.onOpen();
     }, [loginModal, registerModal, isLoading]);
@@ -31,29 +31,29 @@ const RegisterModal = () => {
         try {
             setIsLoading(true);
 
-              await axios.post('/api/register', {
+            await axios.post('/api/register', {
                 email,
                 password,
                 username,
                 name,
-              });
+            });
 
-            setIsLoading(false)
+            setIsLoading(false);
+            toast.success('Account created successfully.');
 
-            //   toast.success('Account created.');
-
-            //   signIn('credentials', {
-            //     email,
-            //     password,
-            //   });
+            signIn('credentials', {
+                email,
+                password,
+            });
 
             registerModal.onClose();
         } catch (error) {
+            console.log(error);
             toast.error('Something went wrong');
         } finally {
             setIsLoading(false);
         }
-    }, [registerModal]);
+    }, [registerModal, email, username, name, password]);
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
