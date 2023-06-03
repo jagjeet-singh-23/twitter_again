@@ -1,6 +1,6 @@
 import useUser from "@/hooks/useUser";
 import Image from "next/image";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useCallback } from "react";
 
 interface AvatarProps {
@@ -33,7 +33,8 @@ const Avatar: React.FC<AvatarProps> = ({
             relative
         `}>
             <Image
-                fill
+                width={264}
+                height={264}
                 style={{
                     objectFit: 'cover',
                     borderRadius: '100%'

@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
 import useEditModal from "@/hooks/useEditModal";
-import { toast } from "react-hot-toast";
-import axios from "axios";
+
 import Modal from "../Modal";
 import Input from "../Input";
 
@@ -71,7 +73,7 @@ const EditModal = () => {
       <Input
         placeholder="Bio"
         onChange={(e) => setBio(e.target.value)}
-        value={bio}
+        value={bio || ''}
         disabled={isLoading}
       />
     </div>
