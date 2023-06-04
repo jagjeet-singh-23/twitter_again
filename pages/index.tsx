@@ -2,6 +2,7 @@ import Head from "next/head"
 import { NextPage } from "next"
 import Header from "@/components/Header"
 import Form from "@/components/Form"
+import PostFeed from "@/components/posts/PostFeed"
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       </Head>
       <Header label="Home" />
       <Form placeholder="What's happening?" />
+      <PostFeed />
     </>
   )
 }
