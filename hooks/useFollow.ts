@@ -1,9 +1,10 @@
+import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useCallback, useMemo } from "react";
+
 import useCurrentUser from "./useCurrentUser"
 import useLoginModal from "./useLoginModal";
 import useUser from "./useUser";
-import axios from "axios";
-import { toast } from "react-hot-toast";
 
 const useFollow = (userId: string) => {
     const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
