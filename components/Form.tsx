@@ -12,24 +12,25 @@ import Avatar from "./Avatar";
 
 interface FormProps {
     placeholder: string;
-    isComment?: boolean;
-    postId?: string;
 }
 
 const Form: React.FC<FormProps> = ({
     placeholder,
-    isComment,
-    postId
 }) => {
-    const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
+
     const { data: currentUser } = useCurrentUser();
     const { mutate: mutatePosts } = usePosts();
+
     const [body, setBody] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
     const onSubmit = useCallback(async () => {
         try {
             setIsLoading(true);
+            console.log({body});
+            
             await axios.post('/api/posts', { body });
             toast.success("Tweeted");
             setBody('');
@@ -45,9 +46,7 @@ const Form: React.FC<FormProps> = ({
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             {currentUser ? (
                 <div className="flex flex-row gap-4">
-                    <div>
                         <Avatar userId={currentUser?.id} />
-                    </div>
                     <div className="w-full">
                         <textarea
                             disabled={isLoading}
@@ -69,7 +68,13 @@ const Form: React.FC<FormProps> = ({
                             placeholder={placeholder}
                         ></textarea>
                         <hr
-                            className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 transition"
+                            className="
+                            opacity-0 
+                            peer-focus:opacity-100 
+                            h-[1px] 
+                            w-full 
+                            border-neutral-800 
+                            transition"
                         />
                         <div className="mt-4 flex flex-row justify-end">
                             <Button
@@ -79,7 +84,8 @@ const Form: React.FC<FormProps> = ({
                             />
                         </div>
                     </div>
-                </div>) : (
+                </div>
+                ) : (
                 <div className="py-8">
                     <h1 className="text-white text-center text-2xl font-bold mb-4">Welcome to Twitter</h1>
                     <div className="flex flex-row items-center justify-center gap-4">

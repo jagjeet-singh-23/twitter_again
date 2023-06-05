@@ -1,17 +1,15 @@
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
+import { formatDistanceToNowStrict } from "date-fns";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLoginModal from "@/hooks/useLoginModal";
-import { formatDistanceToNowStrict } from "date-fns";
 
 interface PostItemProps {
-    userId?: string;
     data: Record<string, any>;
 }
 
 const PostItem: React.FC<PostItemProps> = ({
-    userId,
     data = {}
 }) => {
     const router = useRouter();
