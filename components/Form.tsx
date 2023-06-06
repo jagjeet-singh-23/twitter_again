@@ -14,7 +14,7 @@ interface FormProps {
     placeholder: string;
     isComment?: boolean;
     postId?: string;
-  }
+}
 
 const Form: React.FC<FormProps> = ({
     placeholder,
@@ -25,7 +25,7 @@ const Form: React.FC<FormProps> = ({
     const loginModal = useLoginModal();
 
     const { data: currentUser } = useCurrentUser();
-    const { mutate: mutatePosts } = usePosts();
+    const { mutate: mutatePosts } = usePosts(postId as string);
 
     const [body, setBody] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -33,9 +33,8 @@ const Form: React.FC<FormProps> = ({
     const onSubmit = useCallback(async () => {
         try {
             setIsLoading(true);
-            console.log({body});
-            
-            await axios.post('/api/posts', { body });
+            const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
+            await axios.post(url, { body });
             toast.success("Tweeted");
             setBody('');
             mutatePosts();
@@ -45,12 +44,12 @@ const Form: React.FC<FormProps> = ({
         } finally {
             setIsLoading(false);
         }
-    }, [body, mutatePosts]);
+    }, [body, mutatePosts, isComment, postId]);
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             {currentUser ? (
                 <div className="flex flex-row gap-4">
-                        <Avatar userId={currentUser?.id} />
+                    <Avatar userId={currentUser?.id} />
                     <div className="w-full">
                         <textarea
                             disabled={isLoading}
@@ -89,7 +88,7 @@ const Form: React.FC<FormProps> = ({
                         </div>
                     </div>
                 </div>
-                ) : (
+            ) : (
                 <div className="py-8">
                     <h1 className="text-white text-center text-2xl font-bold mb-4">Welcome to Twitter</h1>
                     <div className="flex flex-row items-center justify-center gap-4">
