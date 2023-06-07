@@ -14,7 +14,8 @@ const useFollow = (userId: string) => {
     const isFollowing = useMemo(() => {
         const list = currentUser?.followingIds || [];
         return list.includes(userId);
-    }, [userId, currentUser]);
+    }, [userId, currentUser?.followingIds]);
+    
 
     const toggleFollow = useCallback(async () => {
         if (!currentUser) {
