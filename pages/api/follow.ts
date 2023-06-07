@@ -13,6 +13,8 @@ export default async function handler(
     try {
         const { userId } = req.body;
         const { currentUser } = await serverAuth(req, res);
+        console.log(userId);
+
 
         if (!userId || typeof userId !== "string") {
             throw new Error("Invalid User ID");
@@ -27,14 +29,14 @@ export default async function handler(
         if (!user) {
             throw new Error("Invalid User ID");
         }
-        let updatedFollowingIDs = [...user.followingIds || []];
+        let updatedFollowingIDs = [...(user.followingIds || [])];
 
         if (req.method === "POST") {
             updatedFollowingIDs.push(userId);
         }
 
         if (req.method === "DELETE") {
-            updatedFollowingIDs = updatedFollowingIDs.filter(followingIds => followingIds !== userId);
+            updatedFollowingIDs = updatedFollowingIDs.filter((followingIds) => followingIds !== userId);
         }
         const updatedUser = await prisma.user.update({
             where: {
